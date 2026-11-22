@@ -48,7 +48,11 @@ def test_alert_maps_to_ecs():
 def test_invalid_json_is_tagged_and_unmapped():
     (ev,) = run_pipeline(ROOT / "tests/samples/suricata_invalid.txt")
     assert "_jsonparsefailure" in ev["tags"]
-    assert "source" not in ev and "event" not in ev
+    # Logstash 8 ECS mode may keep event.original; mapped Suricata fields must stay absent.
+    assert "source" not in ev
+    assert "destination" not in ev
+    assert "rule" not in ev
+
 
 
 def test_dns_answer_maps_to_ecs_and_fires_the_rule():
