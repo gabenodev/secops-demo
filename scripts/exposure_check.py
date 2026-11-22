@@ -23,11 +23,17 @@ def main():
     import shodan
 
     api = shodan.Shodan(os.environ["SHODAN_KEY"])
+    ip = os.environ["OWN_PUBLIC_IP"]
     try:
-        host = api.host(os.environ["OWN_PUBLIC_IP"])
+        host = api.host(ip)
+        snap = snapshot(host)
     except shodan.APIError as err:
-        raise SystemExit(f"Shodan: {err}")
-    snap = snapshot(host)
+        # Free/OSS keys often cannot call host(); "not indexed" is a valid lab finding (R-05).
+        msg = str(err).lower()
+        if "403" in msg or "401" in msg or "no information" in msg or "not found" in msg:
+            snap = {"ip": ip, "ports": [], "org": None, "last_update": None, "note": str(err)}
+        else:
+            raise SystemExit(f"Shodan: {err}")
     out = Path("exposure") / f"{date.today()}.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(snap, indent=2) + "\n")
