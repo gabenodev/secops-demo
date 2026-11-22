@@ -8,6 +8,11 @@ keys.txt
 *.key
 certs/
 
+# Runtime lookup and exposure snapshots (R-04, R-05)
+enrich/
+exposure/
+data/
+
 # macOS
 .DS_Store
 
@@ -19,3 +24,6 @@ __pycache__/
 
 # Claude Code per-user settings
 .claude/settings.local.json
+
+# Generated Dashboards config (contains password)
+config/opensearch-dashboards/opensearch_dashboards.yml

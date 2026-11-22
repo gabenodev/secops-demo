@@ -1,9 +1,10 @@
 # Ports, hostnames and image digests come from .env (see CLAUDE.md).
 .PHONY: up down test lint secrets
 
-# Decrypt the SOPS secret for compose; owner-only, deleted by make down (R-02).
+# Decrypt SOPS secrets for compose; owner-only, deleted by make down (R-02, R-04).
 secrets:
-	umask 077 && sops -d secrets/opensearch.enc.yaml | sed 's/: /=/' > .env.secrets
+	umask 077 && { sops -d secrets/opensearch.enc.yaml; [ ! -f secrets/intel.enc.yaml ] || sops -d secrets/intel.enc.yaml; } \
+	  | sed 's/: /=/' > .env.secrets
 
 up: secrets
 	docker compose --env-file .env --env-file .env.secrets up -d

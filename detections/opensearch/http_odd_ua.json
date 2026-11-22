@@ -1,0 +1,9 @@
+{
+  "query": {
+    "query_string": {
+      "query": "(http.request.method:GET AND user_agent.original:python\\-requests\\/*)",
+      "analyze_wildcard": true,
+      "time_zone": "UTC"
+    }
+  }
+}

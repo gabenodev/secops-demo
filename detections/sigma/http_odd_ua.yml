@@ -1,0 +1,22 @@
+title: Non-browser HTTP user agent
+id: 99e2cb89-0825-40ec-9ed5-d6932576a5e8
+status: experimental
+description: HTTP request with a user agent that real browsers never send, often used by malware beacons (T1071.001).
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+author: secops-demo
+date: 2026-11-21
+tags:
+  - attack.command-and-control
+  - attack.t1071.001
+logsource:
+  product: suricata
+  service: http
+detection:
+  selection:
+    http.request.method: GET
+    user_agent.original|startswith: 'python-requests/'
+  condition: selection
+falsepositives:
+  - Legitimate automation and monitoring tools that use python-requests
+level: low

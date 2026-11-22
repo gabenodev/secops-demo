@@ -1,0 +1,14 @@
+# Alertmanager-style rules for exposure drift (RISK-REGISTER R-05).
+# Lab 7 wires these to a live Alertmanager; the daily Shodan snapshot is the input.
+groups:
+  - name: exposure
+    rules:
+      - alert: NewOpenPortOrBanner
+        expr: exposure_ports_changed == 1
+        for: 0m
+        labels:
+          severity: warning
+          risk: R-05
+        annotations:
+          summary: "Shodan sees a new open port or banner on the watched IP"
+          description: "Compare the latest file under exposure/ with the previous snapshot from scripts/exposure_check.py."

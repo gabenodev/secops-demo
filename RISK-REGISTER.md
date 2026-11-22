@@ -22,6 +22,8 @@ Verified must point to something a reviewer can open in the clone.
 | R-03 | Internal | Logstash enrichment pipeline | Malformed log input breaks normalisation, detections go blind | — | 3 | 4 | 12 (Medium) | pytest suite with positive and negative samples, run in CI on every pull request | 1 | 4 | 4 (Low) | `tests/test_sigma_dns_txt.py`; `tests/samples/`; `.github/workflows/ci.yml` | Verified |
 | R-04 | External | Host telemetry | Traffic from known-malicious IPs goes unflagged | T1071 | 4 | 4 | 16 (High) | MISP feed to translate filter, telemetry tagged `threat.indicator.matched` and risk-scored | 2 | 3 | 6 (Low) | `scripts/misp_pull.py`; `pipelines/suricata.conf`; `docs/evidence/` | Verified |
 | R-05 | External | Public-facing nginx front door | Exposed service version indexed by Shodan | T1595.002 | 3 | 3 | 9 (Medium) | Weekly Shodan query on own IP, alert on a new open port or banner | 1 | 3 | 3 (Low) | `scripts/exposure_check.py`; `monitoring/alerts.yml` | Implemented |
+| R-08 | Operational | GitHub Actions | Third-party action tag moved to malicious code | — | 3 | 5 | 15 (High) | Pin every `uses:` to a full commit SHA; Dependabot cooldown 7 days; zizmor in CI | 1 | 5 | 5 (Low) | `.github/workflows/ci.yml`; `.github/dependabot.yml` | Implemented |
+| R-09 | Operational | Repository secrets in Actions | Fork pull request reads repository secrets | — | 3 | 5 | 15 (High) | Default `contents: read`; no `pull_request_target` with untrusted checkout; fork workflows require approval | 1 | 5 | 5 (Low) | `.github/workflows/ci.yml`; repo Actions settings | Implemented |
 
 ## How each control lands in the repository
 

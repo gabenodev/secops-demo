@@ -1,0 +1,1 @@
+{"event":{"module":"suricata","dataset":"suricata.eve"},"http":{"request":{"method":"GET"}},"user_agent":{"original":"python-requests/2.31.0"}}
