@@ -2,5 +2,5 @@
 # Pinned exactly so every run installs the same version.
 pytest==8.3.5
 PyYAML==6.0.2
-sigma-cli==1.0.4
+sigma-cli==4.0.1
 pySigma-backend-opensearch==1.0.3
